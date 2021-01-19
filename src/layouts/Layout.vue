@@ -12,6 +12,7 @@
       <q-tabs>
         <q-route-tab
           v-for="nav in navs"
+          :key="nav.label"
           :to="nav.to"
           :icon="nav.icon"
           :label="nav.label"
