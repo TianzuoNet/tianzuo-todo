@@ -1,6 +1,7 @@
 <template>
   <q-page padding>
     <q-list
+      v-if="Object.keys(tasks).length"
       separator
       bordered>
       <task
@@ -20,7 +21,7 @@
       />
     </div>
     <q-dialog v-model="showAddTask">
-      <add-task/>
+      <add-task @close="showAddTask = false" />
     </q-dialog>
   </q-page>
 </template>
@@ -31,7 +32,7 @@ import {mapGetters} from 'vuex'
 export default {
   data() {
     return {
-      showAddTask: true
+      showAddTask: false
     }
   },
   computed: {
