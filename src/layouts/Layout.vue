@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title class="absolute-center">
-          Tianzuo Todo
+          任务管理
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -70,12 +70,12 @@ export default {
       leftDrawerOpen: this.$q.platform.is.desktop,
       navs: [
         {
-          label: 'Todo',
+          label: '待办',
           icon: 'list',
           to: '/'
         },
         {
-          label: 'Settings',
+          label: '设置',
           icon: 'settings',
           to: '/settings'
         }
