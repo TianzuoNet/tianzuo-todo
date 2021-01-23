@@ -2,9 +2,20 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title class="absolute-center">
+
+        <q-toolbar-title
+          class="absolute-center">
           任务管理
         </q-toolbar-title>
+
+        <q-btn
+          to="/auth"
+          flat
+          icon-right="account_circle"
+          label="登录"
+          class="absolute-right"
+        />
+
       </q-toolbar>
     </q-header>
 

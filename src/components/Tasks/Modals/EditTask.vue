@@ -24,14 +24,10 @@
 
 <script>
 import {mapActions} from 'vuex'
-import ModalHeader from "components/Tasks/Modals/Shared/ModalHeader";
-import ModalTaskName from "components/Tasks/Modals/Shared/ModalTaskName";
-import ModalDueDate from "components/Tasks/Modals/Shared/ModalDueDate";
-import ModalDueTime from "components/Tasks/Modals/Shared/ModalDueTime";
-import ModalButtons from "components/Tasks/Modals/Shared/ModalButtons";
+import mixinAddEditTask from 'src/mixins/mixin-add-edit-task'
 
 export default {
-  components: {ModalButtons, ModalDueTime, ModalDueDate, ModalTaskName, ModalHeader},
+  mixins: [mixinAddEditTask],
   props: ['task', 'id'],
   data() {
     return {
@@ -40,12 +36,6 @@ export default {
   },
   methods: {
     ...mapActions('tasks', ['updateTask']),
-    submitForm() {
-      this.$refs.modalTaskName.$refs.name.validate()
-      if (!this.$refs.modalTaskName.$refs.name.hasError) {
-        this.submitTask()
-      }
-    },
     submitTask() {
       this.updateTask({
         id: this.id,
@@ -56,13 +46,6 @@ export default {
   },
   mounted() {
     this.taskToSubmit = Object.assign({}, this.task)
-  },
-  comments: {
-    'modal-header': require('components/Tasks/Modals/Shared/ModalHeader').default,
-    'model-task-name': require('components/Tasks/Modals/Shared/ModalTaskName').default,
-    'model-due-date': require('components/Tasks/Modals/Shared/ModalDueDate').default,
-    'model-due-time': require('components/Tasks/Modals/Shared/ModalDueTime').default,
-    'model-buttons': require('components/Tasks/Modals/Shared/ModalButtons').default,
   }
 }
 </script>

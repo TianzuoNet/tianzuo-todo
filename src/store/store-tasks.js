@@ -5,22 +5,22 @@ const state = {
   tasks: {
     "ID1": {
       name: 'A Go to shop',
-      completed: true,
+      completed: false,
       dueDate: '2021/01/18',
       dueTime: '18:20'
     },
     "ID2": {
       name: 'C Get bananas',
-      completed: true,
+      completed: false,
       dueDate: '2021/01/20',
       dueTime: '18:50'
     },
     "ID3": {
       name: 'B Get apples',
-      completed: true,
+      completed: false,
       dueDate: '2021/01/21',
       dueTime: '09:20'
-    },
+    }
   },
   search: '',
   sort: 'name'
