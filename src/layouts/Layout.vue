@@ -9,10 +9,20 @@
         </q-toolbar-title>
 
         <q-btn
+          v-if="!loggedIn"
           to="/auth"
           flat
           icon-right="account_circle"
           label="登录"
+          class="absolute-right"
+        />
+
+        <q-btn
+          @click="logoutUser"
+          v-else
+          flat
+          icon-right="account_circle"
+          label="注销"
           class="absolute-right"
         />
 
@@ -43,7 +53,7 @@
         <q-item-label
           header
         >
-          Navigation
+          菜单
         </q-item-label>
         <q-item
           v-for="nav in navs"
@@ -74,6 +84,8 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex'
+
 export default {
   name: 'Layout',
   data() {
@@ -92,6 +104,12 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapState('auth', ['loggedIn'])
+  },
+  methods: {
+    ...mapActions('auth', ['logoutUser'])
   }
 }
 </script>

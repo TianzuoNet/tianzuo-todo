@@ -1,9 +1,9 @@
-import * as firebase from "firebase/app"
+import firebase from "firebase/app"
 import "firebase/analytics";
 
 import "firebase/auth";
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyC__9eoYo1zrK88YS3lg19DV_tJP8zLd0w",
   authDomain: "tz-todo.firebaseapp.com",
   databaseURL: "https://tz-todo-default-rtdb.firebaseio.com",
