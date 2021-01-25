@@ -27,5 +27,5 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 ### process
 
 ```
-18.13
+20.6
 ```
