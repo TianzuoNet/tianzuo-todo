@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import {uid} from 'quasar'
+import {uid, Notify} from 'quasar'
 import {firebaseDb, firebaseAuth} from "boot/firebase";
+import {showErrorMessage} from "src/functions/function-show-error-message";
 
 const state = {
   tasks: {
@@ -24,7 +25,8 @@ const state = {
     // }
   },
   search: '',
-  sort: 'name'
+  sort: 'name',
+  tasksDownloaded: false
 }
 
 const mutations = {
@@ -37,28 +39,34 @@ const mutations = {
   addTask(state, payload) {
     Vue.set(state.tasks, payload.id, payload.task)
   },
+  clearTasks(state) {
+    state.tasks = {}
+  },
   setSearch(state, value) {
     state.search = value
   },
   setSort(state, value) {
     state.sort = value
+  },
+  setTasksDownloaded(state, value) {
+    state.tasksDownloaded = value
   }
 }
 
 const actions = {
-  updateTask({commit}, payload) {
-    commit('updateTask', payload)
+  updateTask({dispatch}, payload) {
+    dispatch('fbUpdateTask', payload)
   },
-  deleteTask({commit}, id) {
-    commit('deleteTask', id)
+  deleteTask({dispatch}, id) {
+    dispatch('fbDeleteTask', id)
   },
-  addTask({commit}, task) {
+  addTask({dispatch}, task) {
     let taskId = uid()
     let payload = {
       id: taskId,
       task: task
     }
-    commit('addTask', payload)
+    dispatch('fbAddTask', payload)
   },
   setSearch({commit}, value) {
     commit('setSearch', value)
@@ -68,9 +76,16 @@ const actions = {
   },
 
   fbReadData({commit}) {
-    console.log(firebaseAuth.currentUser.uid)
     let userId = firebaseAuth.currentUser.uid
     let userTasks = firebaseDb.ref('tasks/' + userId)
+
+    // initial check for data
+    userTasks.once('value', snapshop => {
+      commit('setTasksDownloaded', true)
+    }, error => {
+      showErrorMessage('读取数据库出错')
+      this.$router.replace('/auth')
+    })
 
     //child_added
     userTasks.on('child_added', snapshot => {
@@ -98,6 +113,42 @@ const actions = {
       commit('deleteTask', taskId)
     })
 
+  },
+  fbAddTask({}, payload) {
+    let userId = firebaseAuth.currentUser.uid
+    let taskRef = firebaseDb.ref('tasks/' + userId + '/' + payload.id)
+    taskRef.set(payload.task, error => {
+      if (error) {
+        showErrorMessage('没有权限')
+      } else {
+        Notify.create('任务已添加')
+      }
+    })
+  },
+  fbUpdateTask({}, payload) {
+    let userId = firebaseAuth.currentUser.uid
+    let taskRef = firebaseDb.ref('tasks/' + userId + '/' + payload.id)
+    taskRef.update(payload.updates, error => {
+      if (error) {
+        showErrorMessage('没有权限')
+      } else {
+        let keys = Object.keys(payload.updates)
+        if (keys.length !== 1) {
+          Notify.create('任务已更新')
+        }
+      }
+    })
+  },
+  fbDeleteTask({}, taskId) {
+    let userId = firebaseAuth.currentUser.uid
+    let taskRef = firebaseDb.ref('tasks/' + userId + '/' + taskId)
+    taskRef.remove(error => {
+      if (error) {
+        showErrorMessage('没有权限')
+      } else {
+        Notify.create('任务已删除')
+      }
+    })
   }
 }
 
