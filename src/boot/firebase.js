@@ -5,14 +5,13 @@ import "firebase/auth";
 import "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC__9eoYo1zrK88YS3lg19DV_tJP8zLd0w",
-  authDomain: "tz-todo.firebaseapp.com",
-  databaseURL: "https://tz-todo-default-rtdb.firebaseio.com",
-  projectId: "tz-todo",
-  storageBucket: "tz-todo.appspot.com",
-  messagingSenderId: "971234233014",
-  appId: "1:971234233014:web:0ead32cd1e6f3ef6b5f417",
-  measurementId: "G-FGVN1G4CED"
+  apiKey: "AIzaSyCiWYs9POgpCSYuF_IzX-jyCYBL4v635Go",
+  authDomain: "todo-tianzuo.firebaseapp.com",
+  databaseURL: "https://todo-tianzuo-default-rtdb.firebaseio.com",
+  projectId: "todo-tianzuo",
+  storageBucket: "todo-tianzuo.appspot.com",
+  messagingSenderId: "234853916323",
+  appId: "1:234853916323:web:5c1395aa799ea02053a916"
 };
 
 let firebaseApp = firebase.initializeApp(firebaseConfig)
